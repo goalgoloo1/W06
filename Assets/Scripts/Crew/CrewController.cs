@@ -22,6 +22,7 @@ public class CrewController : MonoBehaviour
     float _additionalMissChance;
 
     // 캐릭터 이동
+    [Tooltip("캐릭터 선택 효과")][SerializeField] SpriteRenderer _glow;
     NavMeshAgent _agent;
     Coroutine _moveCo;
 
