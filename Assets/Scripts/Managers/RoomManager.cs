@@ -1,3 +1,4 @@
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 
 public class RoomManager : MonoBehaviour
@@ -7,9 +8,11 @@ public class RoomManager : MonoBehaviour
     [SerializeField] SpriteRenderer selectCellEffect;
     public Cell SelectedCell { get; private set; }
 
-    //¼¿ ¼±ÅÃ½Ã ÇÃ·¹ÀÌ¾î ¿òÁ÷ÀÏ ¼¿ °ü¸®
-    //ÀüÅõ ½Ã ¹æ Çàµ¿
-    //ÀÏ´Ü monobehavior Áö¸¸ °¡´ÉÇÏ¸é ³ªÁß¿¡ ¸®ÆÑÅä¸µÀ¸·Î º¯°æ
+    public List<IRoomAction> Rooms { get; private set; }
+
+    //ì…€ ì„ íƒì‹œ í”Œë ˆì´ì–´ ì›€ì§ì¼ ì…€ ê´€ë¦¬
+    //ì „íˆ¬ ì‹œ ë°© í–‰ë™
+    //ì¼ë‹¨ monobehavior ì§€ë§Œ ê°€ëŠ¥í•˜ë©´ ë‚˜ì¤‘ì— ë¦¬íŒ©í† ë§ìœ¼ë¡œ ë³€ê²½
 
     private void Awake()
     {
@@ -17,6 +20,7 @@ public class RoomManager : MonoBehaviour
         {
             Instance = this;
         }
+        Rooms = new List<IRoomAction>();
     }
     void Start()
     {
@@ -24,14 +28,22 @@ public class RoomManager : MonoBehaviour
         GameManager.Input.deselectCellAction += DeselectCell;
     }
 
+    private void Update()
+    {
+        foreach (IRoomAction room in Rooms)
+        {
+            room.RoomAction();
+        }
+    }
     void SelectCell(GameObject cellToMove)
     {
         SelectedCell = cellToMove.GetComponent<Cell>();
         selectCellEffect.transform.position = cellToMove.transform.position;
         selectCellEffect.enabled = true;
+        CrewController.Instance.SelectedCrew.Move(SelectedCell.transform.position);
         CrewController.Instance.SelectedCrew.currentCell = SelectedCell;
         CrewController.Instance.SelectedCrew.currentCell.CrewInCell = CrewController.Instance.SelectedCrew;
-        CrewController.Instance.SelectedCrew.Move(SelectedCell.transform.position);
+        CrewController.Instance.SelectedCrew.currentCell.transform.parent.GetComponent<RoomSystem>().AddCrew(CrewController.Instance.SelectedCrew);
         CrewController.Instance.Deselect();
     }
 

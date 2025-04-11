@@ -1,16 +1,28 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class RoomSystem : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] protected List<Crew> CrewsInRoom { get; private set; }
+
     void Start()
     {
-        
+        CrewsInRoom = new List<Crew>();
+        Init();
     }
 
-    // Update is called once per frame
-    void Update()
+    protected virtual void Init()
     {
-        
+
+    }
+
+    public void AddCrew(Crew crew)
+    {
+        CrewsInRoom.Add(crew);
+    }
+
+    public void RemoveCrew(Crew crew)
+    {
+        CrewsInRoom.Remove(crew);
     }
 }
