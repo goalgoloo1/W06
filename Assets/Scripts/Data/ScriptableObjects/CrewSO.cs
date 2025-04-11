@@ -3,8 +3,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "CrewSO", menuName = "Scriptable Objects/CrewSO")]
 public class CrewSO : ScriptableObject
 {
-    [SerializeField] private int _crewId;
-
     [Header("유닛 설정")]
     [SerializeField] private string _name;
     [SerializeField] private CrewRank _rank;
@@ -28,7 +26,6 @@ public class CrewSO : ScriptableObject
     [Tooltip("성향")]
     [SerializeField] private float _evilRate;
 
-    public int CrewId => _crewId;
     public string Name => _name;
     public CrewRank Rank => _rank;
     public float MaxHealth => _maxHealth;
