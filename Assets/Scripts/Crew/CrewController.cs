@@ -86,5 +86,14 @@ public class CrewController : MonoBehaviour
         }
     }
 
-
+    public void Damage(float amount)
+    {
+        _currentHealthPoint -= amount;
+        if(_currentHealthPoint <= 0)
+        {
+            _currentHealthPoint = 0;
+            Debug.Log($"{_crewCode} is dead");
+            Destroy(gameObject);
+        }
+    }
 }
