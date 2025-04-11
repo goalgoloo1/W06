@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
 
@@ -7,23 +7,25 @@ public class Crew : MonoBehaviour
     CrewSO _crewInfo;
     public Cell currentCell;
 
-    // Ä³¸¯ÅÍ ½ºÅÈ
-    [Tooltip("Ä³¸¯ÅÍ ÀÌ¸§")][SerializeField] string _crewCode;
+    // ìºë¦­í„° ìŠ¤íƒ¯
+    [Tooltip("ìºë¦­í„° ì´ë¦„")][SerializeField] string _crewCode;
     float _maxHealth;
     float _currentHealthPoint;
     float _moveSpeed;
+    float _repairSpeed;
     float _attackSpeed;
     float _healSpeed;
     float _avoidance;
     float _evilRate;
 
-    // Ä³¸¯ÅÍ Ãß°¡ ½ºÅÈ
+    // ìºë¦­í„° ì¶”ê°€ ìŠ¤íƒ¯
+    float _additionalRepairSpeed;
     float _additionalAttackSpeed;
     float _additionalHealSpeed;
     float _additionalAvoidance;
 
-    // Ä³¸¯ÅÍ ÀÌµ¿
-    [Tooltip("Ä³¸¯ÅÍ ¼±ÅÃ È¿°ú")][SerializeField] SpriteRenderer _glow;
+    // ìºë¦­í„° ì´ë™
+    [Tooltip("ìºë¦­í„° ì„ íƒ íš¨ê³¼")][SerializeField] SpriteRenderer _glow;
     NavMeshAgent _agent;
     Coroutine _moveCo;
 
@@ -41,17 +43,21 @@ public class Crew : MonoBehaviour
         UpdateStats();
         _currentHealthPoint = _maxHealth;
         _agent.speed = _moveSpeed;
+        Spawn();
 
     }
 
     void Spawn()
     {
-
+        currentCell.transform.parent.GetComponent<RoomSystem>().AddCrew(this);
     }
 
-    // Ä³¸¯ÅÍ ÀÌµ¿ ½Ã È£Ãâ ÇÔ¼ö
+    // ìºë¦­í„° ì´ë™ ì‹œ í˜¸ì¶œ í•¨ìˆ˜
     public void Move(Vector3 targetPos)
     {
+        currentCell.transform.parent.GetComponent<RoomSystem>().RemoveCrew(this);
+        currentCell.CrewInCell = null;
+        currentCell = null;
         if (_moveCo != null)
         {
             StopCoroutine(_moveCo);
@@ -63,13 +69,11 @@ public class Crew : MonoBehaviour
         }
     }
 
-    // Navmesh ÀÌ¿ë ±æ Ã£´Â ÄÚ·çÆ¾
-    // targetPos·Î ±æÀ» Ã£¾Æ ÀÌµ¿
-    // targetPos¿¡´Â ÀÌµ¿ÇÏ´Â ¼¿ÀÇ À§Ä¡
+    // Navmesh ì´ìš© ê¸¸ ì°¾ëŠ” ì½”ë£¨í‹´
+    // targetPosë¡œ ê¸¸ì„ ì°¾ì•„ ì´ë™
+    // targetPosì—ëŠ” ì´ë™í•˜ëŠ” ì…€ì˜ ìœ„ì¹˜
     IEnumerator MoveCoroutine(Vector3 targetPos)
     {
-        currentCell.CrewInCell = null;
-        currentCell = null;
         _agent.SetDestination(targetPos);
         Debug.Log($"{_crewCode} is moving");
         while (Vector2.Distance(transform.position, targetPos) > 0.01f)
@@ -84,7 +88,7 @@ public class Crew : MonoBehaviour
         RoomManager.Instance.DeselectCell();
     }
 
-    // Ä³¸¯ÅÍ Á¤º¸ ¾÷µ¥ÀÌÆ®
+    // ìºë¦­í„° ì •ë³´ ì—…ë°ì´íŠ¸
     void UpdateStats()
     {
 
@@ -122,5 +126,34 @@ public class Crew : MonoBehaviour
     public void ToggleGlow(bool state)
     {
         _glow.enabled = state;
+    }
+    /// <summary>
+    /// ìºë¦­í„° ëŠ¥ë ¥ì¹˜ ì¦ê°€
+    /// 0: ìˆ˜ë¦¬ì†ë„
+    /// 1: ê³µê²© ì†ë„
+    /// 2: ì¹˜ë£Œ ì†ë„
+    /// 3: íšŒí”¼ìœ¨
+    /// </summary>
+    /// <param name="code"> ì¦ê°€í•˜ëŠ” ëŠ¥ë ¥ì¹˜ ì½”ë“œ/// </param>
+    public void UpdateAdditionalStats(int code)
+    {
+        switch (code)
+        {
+            case 0:
+                Debug.Log("ìˆ˜ë¦¬ ì†ë„ ì¦ê°€");
+                break;
+            case 1:
+                Debug.Log("ê³µê²© ì†ë„ ë ˆë²¨ì—…");
+                break;                
+            case 2:
+                Debug.Log("ì¹˜ë£Œ ì†ë„ ë ˆë²¨ì—…");
+                break;
+            case 3:
+                Debug.Log("íšŒí”¼ìœ¨ ì¦ê°€");
+                break;
+            default:
+                Debug.LogWarning("Invalid Stat code");
+                break;
+        }
     }
 }

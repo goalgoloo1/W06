@@ -6,11 +6,25 @@ public class BasicRoom : RoomSystem, IRoomAction
     protected override void Init()
     {
         base.Init();
+        RoomManager.Instance.Rooms.Add(this);
     }
 
     public void RoomAction()
     {
-        Debug.Log("Doing RoomAction");
-        return;
+        if (GameManager.Instance.CurrentState == State.Combat)
+        {
+            Debug.Log("Doing RoomAction");
+            return;
+        }
+        
+    }
+
+    public void crewLevelUp()
+    {
+        if (GameManager.Instance.CurrentState == State.Combat)
+        {
+            Debug.Log("Doing Crew Level Up");
+            return;
+        }
     }
 }
