@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public static PoolManager Pool { get { return Instance._pool; } }
     public static CrewManager CrewManager { get { return Instance._crew; } }
     public static InputManager Input { get { return Instance._input; } }
-
+    
     private SoundManager _sound = new SoundManager();
     private MapManager _map = new MapManager();
     private DataManager _data = new DataManager();
@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
     private PoolManager _pool = new PoolManager();
     private CrewManager _crew = new CrewManager();
     private InputManager _input = new InputManager();
+
+    private State _currentState = State.Idle;
+    public State CurrentState => _currentState;
 
     private void Awake()
     {
@@ -43,5 +46,10 @@ public class GameManager : MonoBehaviour
         Pool.Init();
         CrewManager.Init();
         UI.Init();
+    }
+
+    public void ChangeState(State currentState)
+    {
+        _currentState = currentState;
     }
 }

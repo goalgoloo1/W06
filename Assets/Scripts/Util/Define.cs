@@ -12,6 +12,11 @@ public enum CrewRank
     C
 }
 
+public enum State
+{
+    Idle, 
+    Combat
+}
 public class Define
 {
     
