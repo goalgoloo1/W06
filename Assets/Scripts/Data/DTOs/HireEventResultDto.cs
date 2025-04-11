@@ -2,18 +2,18 @@ using UnityEngine;
 
 public class HireEventResultDto
 {
-    public CrewSO crew;
+    public string crewKey;
     public string description;
 
     public HireEventResultDto()
     {
-        crew = null;
+        crewKey = string.Empty;
         description = string.Empty;
     }
 
-    public HireEventResultDto(CrewSO crew, string description)
+    public HireEventResultDto(string key, string description)
     {
-        this.crew = crew;
+        this.crewKey = key;
         this.description = description;
     }
 }
