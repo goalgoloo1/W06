@@ -46,14 +46,14 @@ public class DataManager
     }
 
     // 오민님께 필요하신 rank에 해당하는 모든 크루 정보를 가져오는 메서드. List에서 랜덤으로 뽑는 로직이길래 List로 반환합니다.
-    public List<CrewSO> GetAllCrewInfoByRank(CrewRank rank)
+     public List<string> GetAllCrewCodeByRank(CrewRank rank)
     {
-        List<CrewSO> crewList = new List<CrewSO>();
+        List<string> crewList = new List<string>();
         foreach (var crew in crewData)
         {
             if (crew.Value.Rank == rank)
             {
-                crewList.Add(crew.Value);
+                crewList.Add(crew.Key);
             }
         }
         return crewList;
