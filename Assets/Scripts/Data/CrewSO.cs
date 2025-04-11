@@ -12,7 +12,6 @@ public class CrewSO : ScriptableObject
 
     [Header("ÃÊ±â ½ºÅÈ")]
     [SerializeField] private float _maxHealth;
-    [SerializeField] private float _health;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _repairSpeed;
     [SerializeField] private float _attackSpeed;
@@ -26,7 +25,6 @@ public class CrewSO : ScriptableObject
     public string Name => _name;
     public CrewRank Rank => _rank;
     public float MaxHealth => _maxHealth;
-    public float Health => _health;
     public float MoveSpeed => _moveSpeed;
     public float RepairSpeed => _repairSpeed;
     public float AttackSpeed => _attackSpeed;
