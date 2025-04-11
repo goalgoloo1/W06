@@ -2,7 +2,7 @@ using UnityEngine;
 
 public enum Example
 {
-    // ÀÌ·±½ÄÀ¸·Î ÀÌ³ÑÅ¸ÀÔÀ» Àü¿ªÀ¸·Î Á¤ÀÇÇØ¼­ ÀÌ Å¬·¡½º¿¡¼­¸¸ °ü¸®ÇØÁÖ¼¼¿ä
+    // ì´ëŸ°ì‹ìœ¼ë¡œ ì´ë„˜íƒ€ìž…ì„ ì „ì—­ìœ¼ë¡œ ì •ì˜í•´ì„œ ì´ í´ëž˜ìŠ¤ì—ì„œë§Œ ê´€ë¦¬í•´ì£¼ì„¸ìš”
 }
 
 public enum CrewRank
