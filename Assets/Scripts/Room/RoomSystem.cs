@@ -4,6 +4,7 @@ using UnityEngine;
 public class RoomSystem : MonoBehaviour
 {
     protected List<Crew> CrewsInRoom { get; private set; }
+    protected bool _isDamaged;
 
     void Start()
     {
