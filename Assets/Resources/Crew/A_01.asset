@@ -13,14 +13,13 @@ MonoBehaviour:
   m_Name: A_01
   m_EditorClassIdentifier: 
   _crewId: 0
-  _name: 
+  _name: Alexa
   _rank: 0
   _description: 
-  _maxHealth: 0
-  _health: 0
-  _moveSpeed: 0
-  _repairSpeed: 0
-  _attackSpeed: 0
-  _healSpeed: 0
-  _avoidance: 0
-  _evilRate: 0
+  _maxHealth: 100
+  _moveSpeed: 4
+  _repairSpeed: 3
+  _attackSpeed: 2
+  _healSpeed: 3
+  _avoidance: 2
+  _evilRate: 56.1
