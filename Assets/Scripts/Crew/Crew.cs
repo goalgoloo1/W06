@@ -86,7 +86,7 @@ public class Crew : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, 0f, angle);
             yield return null;
         }
-        transform.position = targetPos;
+        transform.position = new Vector3(targetPos.x, targetPos.y, -0.1f);
         transform.rotation = currentCell.transform.rotation;
         RoomManager.Instance.DeselectCell();
     }
@@ -108,7 +108,7 @@ public class Crew : MonoBehaviour
     public void Heal()
     {
         _currentHealthPoint += _healSpeed + _additionalHealSpeed;
-        CheckFullHealth();        
+        CheckFullHealth();
     }
 
     public bool CheckFullHealth()
@@ -117,7 +117,8 @@ public class Crew : MonoBehaviour
         {
             _currentHealthPoint = _maxHealth;
             return true;
-        } else
+        }
+        else
         {
             return false;
         }
@@ -157,7 +158,7 @@ public class Crew : MonoBehaviour
                 break;
             case 1:
                 Debug.Log("공격 속도 레벨업");
-                break;                
+                break;
             case 2:
                 Debug.Log("치료 속도 레벨업");
                 break;
@@ -167,6 +168,32 @@ public class Crew : MonoBehaviour
             default:
                 Debug.LogWarning("Invalid Stat code");
                 break;
+        }
+    }
+
+    /// <summary>
+    /// 캐릭터 기본 + 추가 능력치, 성향 가져오기
+    /// 0: 수리속도
+    /// 1: 공격 속도
+    /// 2: 회피율
+    /// 3: 성향
+    /// </summary>
+    /// <param name="code"> 증가하는 능력치 코드/// </param>
+    public float GetCrewStat(int code)
+    {
+        switch (code)
+        {
+            case 0:
+                return (_repairSpeed + _additionalRepairSpeed);
+            case 1:
+                return (_attackSpeed + _additionalAttackSpeed);
+            case 2:
+                return (_avoidance + _additionalAvoidance);
+            case 3:
+                return (_evilRate);
+            default:
+                Debug.LogWarning("Invalid Stat code");
+                return -1;
         }
     }
 }
