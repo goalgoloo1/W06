@@ -21,7 +21,7 @@ public class DataManager
             if (!crewData.ContainsKey(key))
             {
                 crewData.Add(key, crew);
-                crewIsAlive.Add(key, true); // 크루는 처음에 모두 살아있음
+                crewIsAlive.Add(key, true);
             }
         }
         Debug.Log($"총 {crewData.Count}개의 크루 데이터를 불러왔습니다.");
@@ -43,19 +43,5 @@ public class DataManager
             Debug.LogWarning($"[{crewCode}]에 해당하는 크루 데이터를 찾을 수 없습니다.");
             return null;
         }
-    }
-
-    // 오민님께 필요하신 rank에 해당하는 모든 크루 정보를 가져오는 메서드. List에서 랜덤으로 뽑는 로직이길래 List로 반환합니다.
-    public List<CrewSO> GetAllCrewInfoByRank(CrewRank rank)
-    {
-        List<CrewSO> crewList = new List<CrewSO>();
-        foreach (var crew in crewData)
-        {
-            if (crew.Value.Rank == rank)
-            {
-                crewList.Add(crew.Value);
-            }
-        }
-        return crewList;
     }
 }
