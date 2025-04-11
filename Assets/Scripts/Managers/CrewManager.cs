@@ -10,6 +10,8 @@ public class CrewManager
     List<string> _crewRankCPool;
 
     List<string> _crewListTruck;
+    public List<string> CrewListTruck => _crewListTruck;
+
     public void Init()
     {
         Start();
