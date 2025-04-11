@@ -17,8 +17,7 @@ MonoBehaviour:
   _rank: 0
   _description: 
   _maxHealth: 0
-  _health: 0
-  _moveSpeed: 0
+  _moveSpeed: 4
   _repairSpeed: 0
   _attackSpeed: 0
   _healSpeed: 0
