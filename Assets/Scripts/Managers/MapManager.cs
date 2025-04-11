@@ -2,11 +2,12 @@
 using UnityEngine.UI;
 
 
-public class MapManager : MonoBehaviour
+public class MapManager
 {
-    [SerializeField]GameObject _canvas;
+    private GameObject _canvas;
     public void Init()
     {
+        _canvas = GameObject.Find("Canvas");
     }
 
     public void ExecuteGameEvents()
@@ -15,7 +16,6 @@ public class MapManager : MonoBehaviour
         int randomIndex = Random.Range(0, events.Length);
         Debug.Log(events[randomIndex]);
         _canvas.SetActive(false);
-        
     }
 
 
