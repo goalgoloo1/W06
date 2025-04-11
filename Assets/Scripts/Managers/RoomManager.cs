@@ -1,22 +1,32 @@
+ï»¿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class RoomManager : MonoBehaviour
 {
-    public static RoomManager Instance {  get; private set; }   
+    public static RoomManager Instance { get; private set; }
 
     [SerializeField] SpriteRenderer selectCellEffect;
     public Cell SelectedCell { get; private set; }
 
-    //¼¿ ¼±ÅÃ½Ã ÇÃ·¹ÀÌ¾î ¿òÁ÷ÀÏ ¼¿ °ü¸®
-    //ÀüÅõ ½Ã ¹æ Çàµ¿
-    //ÀÏ´Ü monobehavior Áö¸¸ °¡´ÉÇÏ¸é ³ªÁß¿¡ ¸®ÆÑÅä¸µÀ¸·Î º¯°æ
+    public List<IRoomAction> Rooms { get; private set; }
+
+    // ìºë¦­í„° ëŠ¥ë ¥ì¹˜ ì¦ê°€
+    bool _canLevelUp = true;
+    Coroutine _levelUpCo;
+    [SerializeField] float _levelUpSpeed;
+
+    //ì…€ ì„ íƒì‹œ í”Œë ˆì´ì–´ ì›€ì§ì¼ ì…€ ê´€ë¦¬
+    //ì „íˆ¬ ì‹œ ë°© í–‰ë™
+    //ì¼ë‹¨ monobehavior ì§€ë§Œ ê°€ëŠ¥í•˜ë©´ ë‚˜ì¤‘ì— ë¦¬íŒ©í† ë§ìœ¼ë¡œ ë³€ê²½
 
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
         }
+        Rooms = new List<IRoomAction>();
     }
     void Start()
     {
@@ -24,13 +34,24 @@ public class RoomManager : MonoBehaviour
         GameManager.Input.deselectCellAction += DeselectCell;
     }
 
+    private void Update()
+    {
+        foreach (IRoomAction room in Rooms)
+        {
+            room.RoomAction();
+            if (_canLevelUp)
+            {
+                _canLevelUp = false;
+                room.CrewLevelUp();
+                _levelUpCo = StartCoroutine(crewLevelUpCoroutine());
+            }
+        }
+    }
     void SelectCell(GameObject cellToMove)
     {
         SelectedCell = cellToMove.GetComponent<Cell>();
         selectCellEffect.transform.position = cellToMove.transform.position;
         selectCellEffect.enabled = true;
-        CrewController.Instance.SelectedCrew.currentCell = SelectedCell;
-        CrewController.Instance.SelectedCrew.currentCell.CrewInCell = CrewController.Instance.SelectedCrew;
         CrewController.Instance.SelectedCrew.Move(SelectedCell.transform.position);
         CrewController.Instance.Deselect();
     }
@@ -39,5 +60,11 @@ public class RoomManager : MonoBehaviour
     {
         SelectedCell = null;
         selectCellEffect.enabled = false;
+    }
+
+    IEnumerator crewLevelUpCoroutine()
+    {
+        yield return new WaitForSeconds(_levelUpSpeed);
+        _canLevelUp = true;
     }
 }
