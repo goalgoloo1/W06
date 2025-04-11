@@ -41,7 +41,10 @@ public class InputManager
         else
         {
             Debug.Log("No object was hit by the raycast.");
-            deselectCrewAction.Invoke();
+            if (CrewController.Instance.SelectedCrew != null)
+            {
+                deselectCrewAction.Invoke();
+            }
         }
     }
 

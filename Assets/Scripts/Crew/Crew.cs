@@ -57,7 +57,9 @@ public class Crew : MonoBehaviour
     {
         currentCell.transform.parent.GetComponent<RoomSystem>().RemoveCrew(this);
         currentCell.CrewInCell = null;
-        currentCell = null;
+        currentCell = RoomManager.Instance.SelectedCell;
+        currentCell.CrewInCell = this;
+        currentCell.transform.parent.GetComponent<RoomSystem>().AddCrew(this);
         if (_moveCo != null)
         {
             StopCoroutine(_moveCo);
@@ -85,6 +87,7 @@ public class Crew : MonoBehaviour
             yield return null;
         }
         transform.position = targetPos;
+        transform.rotation = currentCell.transform.rotation;
         RoomManager.Instance.DeselectCell();
     }
 
@@ -105,9 +108,18 @@ public class Crew : MonoBehaviour
     public void Heal()
     {
         _currentHealthPoint += _healSpeed + _additionalHealSpeed;
+        CheckFullHealth();        
+    }
+
+    public bool CheckFullHealth()
+    {
         if (_currentHealthPoint >= _maxHealth)
         {
             _currentHealthPoint = _maxHealth;
+            return true;
+        } else
+        {
+            return false;
         }
     }
 
@@ -127,6 +139,7 @@ public class Crew : MonoBehaviour
     {
         _glow.enabled = state;
     }
+
     /// <summary>
     /// 캐릭터 능력치 증가
     /// 0: 수리속도

@@ -19,7 +19,7 @@ public class BasicRoom : RoomSystem, IRoomAction
         
     }
 
-    public void crewLevelUp()
+    public void CrewLevelUp()
     {
         if (GameManager.Instance.CurrentState == State.Combat)
         {

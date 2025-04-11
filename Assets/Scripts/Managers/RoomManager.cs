@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour
 {
-    public static RoomManager Instance {  get; private set; }   
+    public static RoomManager Instance { get; private set; }
 
     [SerializeField] SpriteRenderer selectCellEffect;
     public Cell SelectedCell { get; private set; }
@@ -22,7 +22,7 @@ public class RoomManager : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
         }
@@ -39,10 +39,10 @@ public class RoomManager : MonoBehaviour
         foreach (IRoomAction room in Rooms)
         {
             room.RoomAction();
-            if(_canLevelUp)
+            if (_canLevelUp)
             {
                 _canLevelUp = false;
-                room.crewLevelUp();
+                room.CrewLevelUp();
                 _levelUpCo = StartCoroutine(crewLevelUpCoroutine());
             }
         }
@@ -53,9 +53,6 @@ public class RoomManager : MonoBehaviour
         selectCellEffect.transform.position = cellToMove.transform.position;
         selectCellEffect.enabled = true;
         CrewController.Instance.SelectedCrew.Move(SelectedCell.transform.position);
-        CrewController.Instance.SelectedCrew.currentCell = SelectedCell;
-        CrewController.Instance.SelectedCrew.currentCell.CrewInCell = CrewController.Instance.SelectedCrew;
-        CrewController.Instance.SelectedCrew.currentCell.transform.parent.GetComponent<RoomSystem>().AddCrew(CrewController.Instance.SelectedCrew);
         CrewController.Instance.Deselect();
     }
 
