@@ -15,10 +15,5 @@ public class MapManager : MonoBehaviour
         int randomIndex = Random.Range(0, events.Length);
         Debug.Log(events[randomIndex]);
         _canvas.SetActive(false);
-        
     }
-
-
-
-
 }
