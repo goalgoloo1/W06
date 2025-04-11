@@ -4,10 +4,12 @@ using UnityEngine.AI;
 
 public class CrewController : MonoBehaviour
 {
+    public static CrewController selectedCrew;
+
     CrewSO _crewInfo;
 
     // 캐릭터 스탯/정보
-    string _crewCode;
+    [Tooltip("캐릭터 이름")][SerializeField] string _crewCode;
     float _maxHealth;
     float _currentHealthPoint;
     float _moveSpeed;
@@ -26,16 +28,26 @@ public class CrewController : MonoBehaviour
     NavMeshAgent _agent;
     Coroutine _moveCo;
 
+    private void Awake()
+    {
+        _agent = GetComponent<NavMeshAgent>();
+        _agent.updateRotation = false;
+        _agent.updateUpAxis = false;
+        _agent.updatePosition = false;
+    }
 
     void Start()
     {
         UpdateStats();
         _currentHealthPoint = _maxHealth;
-        _agent = GetComponent<NavMeshAgent>();
-        _agent.updatePosition = false;
-        _agent.updateUpAxis = false;
-        _agent.updatePosition = false;
         _agent.speed = _moveSpeed;
+        GameManager.Input.selectCrewAction += Select;
+        GameManager.Input.deselectCrewAction += Deselect;
+    }
+
+    void Spawn()
+    {
+
     }
 
     void UpdateStats()
@@ -97,5 +109,17 @@ public class CrewController : MonoBehaviour
             GameManager.Data.crewIsAlive[_crewCode] = false;
             Destroy(gameObject);
         }
+    }
+
+    void Select(GameObject clickedCrew)
+    {
+        selectedCrew = clickedCrew.GetComponent<CrewController>();
+        _glow.enabled = true;
+    }
+
+    void Deselect()
+    {
+        selectedCrew = null;
+        _glow.enabled = false;
     }
 }

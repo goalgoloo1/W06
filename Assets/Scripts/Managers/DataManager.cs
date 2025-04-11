@@ -21,6 +21,7 @@ public class DataManager
             if (!crewData.ContainsKey(key))
             {
                 crewData.Add(key, crew);
+                crewIsAlive.Add(key, true);
             }
         }
         Debug.Log($"총 {crewData.Count}개의 크루 데이터를 불러왔습니다.");

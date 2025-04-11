@@ -1,10 +1,12 @@
-using Unity.VisualScripting;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class InputManager
 {
     InputSystem_Actions _inputActions;
+    public Action<GameObject> selectCrewAction;
+    public Action deselectCrewAction;
 
     public void Init()
     {
@@ -24,6 +26,30 @@ public class InputManager
             if (hit.collider.gameObject.CompareTag("Crew"))
             {
                 Debug.Log("Clicked On Crew");
+                selectCrewAction.Invoke(hit.collider.gameObject);
+            }
+            else
+            {
+                deselectCrewAction.Invoke();
+            }
+        }
+        else
+        {
+            Debug.Log("No object was hit by the raycast.");
+            deselectCrewAction.Invoke();
+        }
+    }
+
+    void OnRightClick(InputAction.CallbackContext context)
+    {
+        Vector2 mousePosition = Mouse.current.position.ReadValue();
+        Vector2 worldPoint = Camera.main.ScreenToWorldPoint(mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
+        if (hit.collider != null)
+        {
+            if (hit.collider.gameObject.CompareTag("Cell") && CrewController.selectedCrew != null)
+            {
+                Debug.Log("Selected Cell to Move");
             }
         }
         else
@@ -32,13 +58,10 @@ public class InputManager
         }
     }
 
-    void OnRightClick(InputAction.CallbackContext context)
-    {
-    }
-
     public void CleanUp()
     {
-        if (_inputActions != null) { 
+        if (_inputActions != null)
+        {
             _inputActions.Control.LeftClick.performed -= OnLeftClick;
             _inputActions.Control.RightClick.performed -= OnRightClick;
             _inputActions.Disable();
