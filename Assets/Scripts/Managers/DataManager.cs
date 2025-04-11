@@ -17,14 +17,14 @@ public class DataManager
 
         foreach (var crew in crewSOArray)
         {
-            var key = crew.name; // ÆÄÀÏ ÀÌ¸§ ±×´ë·Î key »ç¿ë
+            var key = crew.name; // íŒŒì¼ ì´ë¦„ ê·¸ëŒ€ë¡œ key ì‚¬ìš©
             if (!crewData.ContainsKey(key))
             {
                 crewData.Add(key, crew);
-                crewIsAlive.Add(key, true);
+                crewIsAlive.Add(key, true); // í¬ë£¨ëŠ” ì²˜ìŒì— ëª¨ë‘ ì‚´ì•„ìˆìŒ
             }
         }
-        Debug.Log($"ÃÑ {crewData.Count}°³ÀÇ Å©·ç µ¥ÀÌÅÍ¸¦ ºÒ·¯¿Ô½À´Ï´Ù.");
+        Debug.Log($"ì´ {crewData.Count}ê°œì˜ í¬ë£¨ ë°ì´í„°ë¥¼ ë¶ˆëŸ¬ì™”ìŠµë‹ˆë‹¤.");
     }
 
     public CrewSO GetCrewInfo(string crewCode)
@@ -33,15 +33,29 @@ public class DataManager
         {
             if (!crewIsAlive[crewCode])
             {
-                Debug.Log("±× Å©·ç´Â ÀÌ¹Ì Á×Àº ÀÚÀÔ´Ï´Ù...");
+                Debug.Log("ê·¸ í¬ë£¨ëŠ” ì´ë¯¸ ì£½ì€ ìì…ë‹ˆë‹¤...");
                 return null;
             }
             return crew;
         }
         else
         {
-            Debug.LogWarning($"[{crewCode}]¿¡ ÇØ´çÇÏ´Â Å©·ç µ¥ÀÌÅÍ¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+            Debug.LogWarning($"[{crewCode}]ì— í•´ë‹¹í•˜ëŠ” í¬ë£¨ ë°ì´í„°ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
             return null;
         }
+    }
+
+    // ì˜¤ë¯¼ë‹˜ê»˜ í•„ìš”í•˜ì‹  rankì— í•´ë‹¹í•˜ëŠ” ëª¨ë“  í¬ë£¨ ì •ë³´ë¥¼ ê°€ì ¸ì˜¤ëŠ” ë©”ì„œë“œ. Listì—ì„œ ëœë¤ìœ¼ë¡œ ë½‘ëŠ” ë¡œì§ì´ê¸¸ë˜ Listë¡œ ë°˜í™˜í•©ë‹ˆë‹¤.
+    public List<CrewSO> GetAllCrewInfoByRank(CrewRank rank)
+    {
+        List<CrewSO> crewList = new List<CrewSO>();
+        foreach (var crew in crewData)
+        {
+            if (crew.Value.Rank == rank)
+            {
+                crewList.Add(crew.Value);
+            }
+        }
+        return crewList;
     }
 }
