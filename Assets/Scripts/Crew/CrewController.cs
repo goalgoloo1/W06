@@ -77,9 +77,14 @@ public class CrewController : MonoBehaviour
         transform.position = targetPos;
     }
 
-    //public void Heal()
-    //{
-    //    _currentHealthPoint += _healSpeed + _additionalHealSpeed;
+    public void Heal()
+    {
+        _currentHealthPoint += _healSpeed + _additionalHealSpeed;
+        if( _currentHealthPoint >= _maxHealthPoint)
+        {
+            _currentHealthPoint = _maxHealthPoint;
+        }
+    }
 
-    //}
+
 }
