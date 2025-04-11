@@ -8,18 +8,18 @@ public class CrewController : MonoBehaviour
 
     // 캐릭터 스탯/정보
     string _crewCode;
-    float _maxHealthPoint;
+    float _maxHealth;
     float _currentHealthPoint;
     float _moveSpeed;
     float _attackSpeed;
     float _healSpeed;
-    float _missChance;
-    float _allignment;
+    float _avoidance;
+    float _evilRate;
 
     // 캐릭터 추가 스탯
     float _additionalAttackSpeed;
     float _additionalHealSpeed;
-    float _additionalMissChance;
+    float _additionalAvoidance;
 
     // 캐릭터 이동
     [Tooltip("캐릭터 선택 효과")][SerializeField] SpriteRenderer _glow;
@@ -30,7 +30,7 @@ public class CrewController : MonoBehaviour
     void Start()
     {
         UpdateStats();
-        _currentHealthPoint = _maxHealthPoint;
+        _currentHealthPoint = _maxHealth;
         _agent = GetComponent<NavMeshAgent>();
         _agent.updatePosition = false;
         _agent.updateUpAxis = false;
@@ -40,15 +40,15 @@ public class CrewController : MonoBehaviour
 
     void UpdateStats()
     {
-        /*
-         * _crewInfo = GameManager.Data.GetCrewInfo(_crewCode);
-         * _maxHealthPoint = _crewInfo.healthPoint;
-         * _moveSpeed = crewInfo.moveSpeed;
-         * _attackSpeed = crewInfo.attackSpeed;
-         * _healSpeed = crewInfo.healSpeed;
-         * _missChance = crewInfo.missChance;
-         * _allignment = crewInfo.allignment;
-         */
+        
+        _crewInfo = GameManager.Data.GetCrewInfo(_crewCode);
+        _maxHealth = _crewInfo.MaxHealth;
+        _moveSpeed = _crewInfo.MoveSpeed;
+        _attackSpeed = _crewInfo.AttackSpeed;
+        _healSpeed = _crewInfo.HealSpeed;
+        _avoidance = _crewInfo.Avoidance;
+        _evilRate = _crewInfo.EvilRate;
+         
     }
 
     public void Move(Vector3 targetPos)
@@ -81,9 +81,9 @@ public class CrewController : MonoBehaviour
     public void Heal()
     {
         _currentHealthPoint += _healSpeed + _additionalHealSpeed;
-        if( _currentHealthPoint >= _maxHealthPoint)
+        if( _currentHealthPoint >= _maxHealth)
         {
-            _currentHealthPoint = _maxHealthPoint;
+            _currentHealthPoint = _maxHealth;
         }
     }
 
@@ -94,6 +94,7 @@ public class CrewController : MonoBehaviour
         {
             _currentHealthPoint = 0;
             Debug.Log($"{_crewCode} is dead");
+            GameManager.Data.crewIsAlive[_crewCode] = false;
             Destroy(gameObject);
         }
     }
