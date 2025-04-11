@@ -11,15 +11,22 @@ public class CrewSO : ScriptableObject
     [SerializeField] private string _description;
 
     [Header("초기 스탯")]
+    [Tooltip("최대체력")]
     [SerializeField] private float _maxHealth;
+    [Tooltip("이동속도")]
     [SerializeField] private float _moveSpeed;
+    [Tooltip("수리게이지 한번에 깍는 양")]
     [SerializeField] private float _repairSpeed;
+    [Tooltip("무기기본 공격속도에서의 감소율")]
     [SerializeField] private float _attackSpeed;
+    [Tooltip("한번 치료시 치료되는 양")]
     [SerializeField] private float _healSpeed;
-    [SerializeField] private float _avoidance;  //회피율
+    [Tooltip("추가 회피율")]
+    [SerializeField] private float _avoidance; 
 
     [Range(0,100)]
-    [SerializeField] private float _evilRate;   //성향
+    [Tooltip("성향")]
+    [SerializeField] private float _evilRate;
 
     public int CrewId => _crewId;
     public string Name => _name;
