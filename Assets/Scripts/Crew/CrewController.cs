@@ -13,13 +13,13 @@ public class CrewController : MonoBehaviour
     float _moveSpeed;
     float _attackSpeed;
     float _healSpeed;
-    float _missChance;
-    float _allignment;
+    float _avoidance;
+    float _evilRate;
 
     // 캐릭터 추가 스탯
     float _additionalAttackSpeed;
     float _additionalHealSpeed;
-    float _additionalMissChance;
+    float _additionalAvoidance;
 
     // 캐릭터 이동
     [Tooltip("캐릭터 선택 효과")][SerializeField] SpriteRenderer _glow;
@@ -42,12 +42,12 @@ public class CrewController : MonoBehaviour
     {
         /*
          * _crewInfo = GameManager.Data.GetCrewInfo(_crewCode);
-         * _maxHealthPoint = _crewInfo.healthPoint;
-         * _moveSpeed = crewInfo.moveSpeed;
-         * _attackSpeed = crewInfo.attackSpeed;
-         * _healSpeed = crewInfo.healSpeed;
-         * _missChance = crewInfo.missChance;
-         * _allignment = crewInfo.allignment;
+         * _maxHealthPoint = _crewInfo.HealthPoint;
+         * _moveSpeed = _crewInfo.MoveSpeed;
+         * _attackSpeed = _crewInfo.AttackSpeed;
+         * _healSpeed = _crewInfo.HealSpeed;
+         * _avoidance = _crewInfo.Avoidance;
+         * _evilRate = _crewInfo.EvilRate;
          */
     }
 
