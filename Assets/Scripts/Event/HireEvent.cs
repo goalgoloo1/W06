@@ -11,15 +11,16 @@ public class HireEvent : NodeEvent
         _hireEventUI = _eventCanvasPrefab.GetComponent<HireEventUI>();
     }
 
+    // 이벤트에 연결될 메서드
+    public override void ShowEventCanvas()
+    {
+        SettingEventCanvas();
+        base.ShowEventCanvas();
+    }
+
     protected override void LoadNodeEventPrefab()
     {
         _eventCanvasPrefab = Resources.Load<GameObject>("EventCanvas/HireEventCanvas");
-    }
-
-    public override void ShowEventCanvas()
-    {
-        base.ShowEventCanvas();
-        SettingEventCanvas();
     }
 
     private void SettingEventCanvas()
