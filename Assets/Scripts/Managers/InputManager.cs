@@ -10,6 +10,7 @@ public class InputManager
     public Action<GameObject> selectCellAction;
     public Action deselectCellAction;
 
+
     public void Init()
     {
         _inputActions = new InputSystem_Actions();
@@ -30,18 +31,21 @@ public class InputManager
                 Debug.Log("Clicked On Crew");
                 selectCrewAction.Invoke(hit.collider.gameObject);
             }
+            
+
+
             else
             {
                 if (CrewController.Instance.SelectedCrew != null)
                 {
-                    deselectCrewAction.Invoke();
+                    deselectCrewAction?.Invoke();
                 }
             }
         }
         else
         {
             Debug.Log("No object was hit by the raycast.");
-            deselectCrewAction.Invoke();
+            deselectCrewAction?.Invoke();
         }
     }
 
