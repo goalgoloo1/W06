@@ -19,6 +19,7 @@ public abstract class NodeEvent : MonoBehaviour
 
     public virtual void ShowEventCanvas()
     {
+        GameManager.Map.ExecuteGameEvents();
         Instantiate(_eventCanvasPrefab);
     }
 }
