@@ -15,15 +15,16 @@ public class FightEvent : NodeEvent
         _fightEventUI = _eventCanvasPrefab.GetComponent<FightEventUI>();
     }
 
+    // 이벤트에 연결될 메서드
+    public override void ShowEventCanvas()
+    {
+        SettingEventCanvas();
+        base.ShowEventCanvas();
+    }
+
     protected override void LoadNodeEventPrefab()
     {
         _eventCanvasPrefab = Resources.Load<GameObject>("EventCanvas/FightEventCanvas");
-    }
-
-    public override void ShowEventCanvas()
-    {
-        base.ShowEventCanvas();
-        SettingEventCanvas();
     }
 
     private void SettingEventCanvas()
