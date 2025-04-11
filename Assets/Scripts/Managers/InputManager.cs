@@ -7,6 +7,8 @@ public class InputManager
     InputSystem_Actions _inputActions;
     public Action<GameObject> selectCrewAction;
     public Action deselectCrewAction;
+    public Action<GameObject> selectCellAction;
+    public Action deselectCellAction;
 
     public void Init()
     {
@@ -30,7 +32,10 @@ public class InputManager
             }
             else
             {
-                deselectCrewAction.Invoke();
+                if (CrewController.Instance.SelectedCrew != null)
+                {
+                    deselectCrewAction.Invoke();
+                }
             }
         }
         else
@@ -47,14 +52,19 @@ public class InputManager
         RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
         if (hit.collider != null)
         {
-            if (hit.collider.gameObject.CompareTag("Cell") && CrewController.selectedCrew != null)
+            if (hit.collider.gameObject.CompareTag("Cell") && CrewController.Instance.SelectedCrew != null)
             {
-                Debug.Log("Selected Cell to Move");
+                if(hit.collider.GetComponent<Cell>().CrewInCell == null)
+                {
+                    Debug.Log("Selected Cell to Move");
+                    selectCellAction.Invoke(hit.collider.gameObject);
+                }
             }
         }
         else
         {
             Debug.Log("No object was hit by the raycast.");
+            deselectCellAction.Invoke();
         }
     }
 
